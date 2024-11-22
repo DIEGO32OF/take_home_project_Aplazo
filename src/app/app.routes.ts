@@ -5,6 +5,7 @@ import { HomeComponent } from './features/home/infra/home.component';
 import { LayoutComponent } from './features/layout/layout.component';
 import { LoginComponent } from './features/login/infra/components/login/login.component';
 import { provideLogin } from './features/login/infra/config/providers';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,7 @@ export const routes: Routes = [
     path: ROUTE_CONFIG.login,
     component: LoginComponent,
     providers: [provideLogin()],
+    
   },
   {
     path: ROUTE_CONFIG.app,
@@ -29,10 +31,14 @@ export const routes: Routes = [
       {
         path: ROUTE_CONFIG.home,
         component: HomeComponent,
+        data: { title: 'Inicio' },
+        canActivate: [AuthGuard]
       },
       {
         path: ROUTE_CONFIG.historial,
         component: HistorialComponent,
+        data: { title: 'Historial' },
+        canActivate: [AuthGuard]
       },
     ],
   },

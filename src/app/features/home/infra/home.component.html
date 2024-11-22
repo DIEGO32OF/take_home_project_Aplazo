@@ -1,0 +1,35 @@
+<style>
+  .custom-bg {
+    background-color: #2d3748; /* Gris oscuro */
+    color: #ffffff; /* Texto blanco */
+  }
+</style>
+<div class="font-serif text-[12pt]">
+  <!-- Título fuera del fondo gris oscuro -->
+  <p class="mt-[26.95pt] text-justify leading-[17.05pt]">
+    <span class="font-sans text-[14pt]">RESUMEN DE PEDIDOS</span>
+  </p>
+  <div>
+    Branch
+    <branch-selector
+      (BranchSelected)="BranchSelected($event)"
+    ></branch-selector>
+    <date-selector (dateChange)="onDateChange($event)"></date-selector>
+  </div>
+  <p></p>
+
+  <!-- Sección con fondo gris oscuro -->
+  <div class="custom-bg p-4 mt-[31.3pt] rounded-lg">
+    <div class="text-[8pt] flex justify-between">
+      <span>TOTAL DE VENTAS</span>
+      <span>NÚMERO DE PEDIDOS</span>
+      <span>TICKET PROMEDIO</span>
+    </div>
+
+    <div class="text-[14pt] flex justify-between mt-2">
+      <span>${{ data.totalSale }}</span>
+      <span>{{ data.orders }}</span>
+      <span>${{ data.averageSales }}</span>
+    </div>
+  </div>
+</div>

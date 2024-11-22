@@ -1,0 +1,42 @@
+<style>
+    .custom-bg {
+      background-color: rgb(26, 224, 102); 
+      color: #fff;
+    }
+    .custom-blg {
+      background-color: rgba(85, 26, 224, 0.63); 
+      color: #fff;
+    }
+  </style>
+  
+  <p></p>
+ {{data.orders}} Pedidos <date-selector (dateChange)="onDateChange($event)"></date-selector> 
+ <button class="px-3 py-1 text-white custom-blg rounded-md hover:bg-blue-600" (click)="onDateChange('')">Limpiar</button>
+  <p></p>
+  <div class="overflow-x-auto bg-white-100 p-4 rounded-lg shadow-md">
+      <table class="min-w-full table-auto">
+        <thead>
+          <tr class="bg-gray-200 text-left">
+            <th class="py-2 px-4 font-semibold text-sm text-black-700 cursor-pointer" (click)="sortData('loanId')">Número de Pedido</th>
+            <th class="py-2 px-4 font-semibold text-sm text-black-700 cursor-pointer" (click)="sortData('updatedAt')">Fecha</th>
+            <th class="py-2 px-4 font-semibold text-sm text-black-700 cursor-pointer" (click)="sortData('status')">Estado</th>
+            <th class="py-2 px-4 font-semibold text-sm text-black-700 cursor-pointer" (click)="sortData('price')">Montos</th>
+            <th class="py-2 px-4 font-semibold text-sm text-black-700">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b hover:bg-white-50" *ngFor="let record of dataTable">
+            <td class="py-2 px-4 text-sm text-gray-800">{{record.loanId}}</td>
+            <td class="py-2 px-4 text-sm text-gray-800">{{record.updatedAt}}</td>
+            <td class="py-2 px-4 text-sm">
+              <span class="px-3 py-1 rounded-full custom-bg bg-green-500">{{record.status}}</span>
+            </td>
+            <td class="py-2 px-4 text-sm text-gray-800">{{record.price}}</td>
+            <td class="py-2 px-4 text-sm">
+              <button class="px-3 py-1 text-white custom-blg rounded-md hover:bg-blue-600">Ver</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  

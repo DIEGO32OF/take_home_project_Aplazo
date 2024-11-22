@@ -1,39 +1,60 @@
-<aplz-ui-logo size="lg"></aplz-ui-logo>
-
-<form [formGroup]="form" (ngSubmit)="login()">
-  <div class="grid gap-6 mb-6 md:grid-cols-2">
-    <div>
-      <label for="username" class="block mb-2 text-sm font-medium text-dark">
-        Correo electrónico
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
+    <aplz-ui-logo size="lg" class="block mx-auto mb-6"></aplz-ui-logo>
+    <label class="block mb-4 text-xl font-bold text-center text-dark">
+      Iniciar sesión como comerciante
+    </label>
+    <form [formGroup]="form" (ngSubmit)="login()" class="space-y-6">
+      <div>
+        <label for="username" class="block mb-2 text-sm font-medium text-dark">
+          Correo electrónico
+        </label>
+        <input
+          type="email"
+          id="username"
+          class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
+          placeholder="my_example_username"
+          formControlName="username"
+          aplazoNoWhiteSpace
+          aplazoLowercase
+        />
+        <div *ngIf="username.invalid && username.touched" class="text-red-500 text-sm">
+          <div *ngIf="username.errors?.['required']">El correo es obligatorio.</div>
+          <div *ngIf="username.errors?.['pattern']">El formato del correo es inválido.</div>
+        </div>
+      </div>
+      <div>
+        <label for="password" class="block mb-2 text-sm font-medium text-dark">
+          Password
+        </label>
+        <input
+        [type]="showPassword ? 'text' : 'password'"
+          type="password"
+          id="password"
+          class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5 pr-10"
+          placeholder="•••••••••"
+          formControlName="password"
+        />
+        <button type="button" (click)="togglePasswordVisibility()" >
+          {{ showPassword ? 'Ocultar' : 'Mostrar' }}
+        </button>
+        <div *ngIf="password.invalid && password.touched" class="text-red-500 text-sm">
+          <div *ngIf="password.errors?.['required']">La contraseña es obligatoria.</div>
+        </div>
+      </div>
+      <button
+        aplzButton
+        aplzAppearance="stroked"
+        aplzColor="dark"
+        size="md"
+        type="submit"
+        class="w-full"
+      >
+        Entrar
+      </button>
+      <label *ngIf="errorMessage">
+        {{errorMessage}}
       </label>
-      <input
-        type="text"
-        id="username"
-        class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
-        placeholder="my_example_username"
-        formControlName="username"
-      />
-    </div>
-    <div>
-      <label for="password" class="block mb-2 text-sm font-medium text-dark">
-        Password
-      </label>
-      <input
-        type="password"
-        id="password"
-        class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
-        placeholder="•••••••••"
-        formControlName="password"
-      />
-    </div>
+    </form>
   </div>
-  <button
-    aplzButton
-    aplzAppearance="stroked"
-    aplzColor="dark"
-    size="md"
-    type="submit"
-  >
-    Entrar
-  </button>
-</form>
+</div>

@@ -10,8 +10,10 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { RouterLinkActive, RouterModule } from '@angular/router';
+import { RouterLinkActive, RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { startWith, Subject, takeUntil, tap } from 'rxjs';
+import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 
 let nextUniqueId = 0;
 
@@ -35,6 +37,12 @@ let nextUniqueId = 0;
   styleUrls: ['./aplazo-sidenav-link.component.css'],
 })
 export class AplazoSidenavLinkComponent implements OnInit, OnDestroy {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private titleService: Title
+  ) {}
+  private titleSubscription: Subscription = new Subscription();
   readonly #routerLink: RouterLinkActive | null = inject(RouterLinkActive, {
     host: true,
     optional: true,
@@ -66,7 +74,15 @@ export class AplazoSidenavLinkComponent implements OnInit, OnDestroy {
     return Object.values(this.#classnames).filter(Boolean).join(' ');
   }
 
+  title: string =''
+
   ngOnInit(): void {
+    this.titleSubscription = this.router.events
+      .pipe(takeUntil(this.#destroy))
+      .subscribe(() => {
+        this.updateTitle();
+      });
+
     this.#routerLink?.isActiveChange
       .pipe(
         takeUntil(this.#destroy),
@@ -85,5 +101,15 @@ export class AplazoSidenavLinkComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.#destroy.next();
     this.#destroy.complete();
+    this.titleSubscription.unsubscribe();
+  }
+
+  private updateTitle(): void {
+    const routeData = this.route.snapshot.firstChild?.data;
+    
+    if (routeData && routeData['title']) {
+      this.title= routeData['title']
+      this.titleService.setTitle(this.title);
+    }
   }
 }

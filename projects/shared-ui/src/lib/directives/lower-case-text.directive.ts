@@ -17,8 +17,12 @@ export class AplazoLowercaseDirective {
   });
 
   sanitizeValue(event: InputEvent): void {
-    // TODO: sanitize the value to lowercase
-    // TODO: propagate the value to the NgControl
-    // TODO: preserve the cursor position
+    const inputElement = this.#elementRef.nativeElement;
+    const lowercaseValue = inputElement.value.toLowerCase();
+    inputElement.value = lowercaseValue;
+
+    if (this.#ngControl) {
+      this.#ngControl.control?.setValue(lowercaseValue);
+    }
   }
 }

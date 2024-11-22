@@ -16,8 +16,12 @@ export class AplazoNoWhiteSpaceDirective {
   });
 
   sanitizeValue(): void {
-    // TODO: sanitize the value to remove white spaces
-    // TODO: propagate the value to the NgControl
-    // TODO: preserve the cursor position
+    const inputElement = this.#elementRef.nativeElement;
+    const sanitizedValue = inputElement.value.replace(/\s+/g, ''); 
+    inputElement.value = sanitizedValue;
+
+    if (this.#ngControl) {
+      this.#ngControl.control?.setValue(sanitizedValue);
+    }
   }
 }

@@ -1,0 +1,21 @@
+<div >
+    <div >
+      <div [formGroup]="form">
+        <select
+          class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500"
+          formControlName="branch"
+          multiple
+          (change)="updateBranch()"
+        >
+          <option
+            *ngFor="let branch of branchesId"
+            [value]="branch"
+          >
+            {{ branch }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+  
